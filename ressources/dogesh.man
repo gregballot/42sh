@@ -1,0 +1,254 @@
+.\" Manpage for dogesh.
+.\" Contact abollo_h@epitech.eu or ballot_g@epitech.eu or le-bor_d@epitech.eu or locate_a@epitech.eu or tawfik_e@epitech.eu.in to correct errors or typos.
+.TH DOGESH "1.0" "dodgesh man page"
+.SH NAME
+.B dogesh \- The best shell for the Epitech's project: 42sh
+.SH SYNOPSIS
+dogesh
+
+.SH DESCRIPTION
+Dogesh is language interpreter that execute commands read from user input or a file. It is programmed in C for the Epitech's project: 42sh, based on different shell as bash, tcsh and zsh.
+
+.SH ALIAS
+You can use aliases to use commands faster. Syntax is simple : command is called alias and takes two arguments. The first is the name of the alias, and the second is the command that will replace it. Example :
+
+     ?> alias ll "ls -l"
+     add ll to alias lists with value "ls -l"
+     ?> ll
+     shell will search in aliases if ll exists and will replace it
+
+     Will execute "ls -l"
+
+Recursive aliases work also. You can alias another alias in order to simplify your command lines. Example :
+
+     ?> alias ls "ls --color"
+     ?> alias ll "ls -l"
+     ?> alias la "ll -a"
+
+     Will execute "ls --color -l -a"
+
+To remove alias from alias list, use unalias (Usage : unalias "name_of_alias" "..." . Example :
+
+     ?> unalias la
+
+"unalias la" will remove from the alias list the field where the name has as string "la". If la does not exists, the world exploses.
+
+You can remove various alias from alias list with unlias. Example :
+
+     ?> unalias ls la ll
+
+"ls" "la" "ll" will remove frome the alias list.
+
+.SH AUTOCOMPLETE
+When you are typing a command line, you can press [TAB] to make the shell look for what can complete your command line. The dogesh will search in the PATH, the files that can be concatenated with the beginning of what the user typed. The dogesh search only for files, not for options. Example :
+
+     list of files :
+     foo   bar   foobar  file
+
+     Command :
+
+     ?> f [TAB] will give
+     foo foobar file
+
+     ?> fo [TAB] will give
+     foo foobar
+
+     ?> foob [TAB] directly complete as :
+     ?> foobar
+
+If there are several propositions, the shell display them. Else, the shell directly complete the command line by the match found by the autocompletion feature of the dogesh.
+
+.SH ADVANCED COMMAND LINE EDITION
+While editing the command line, the user can use some shortcuts to type faster. An history is also set on the Dogesh. To use the history, the user have to use the arrow keys ([UP] and [DOWN]). Up Key will look backward and Down Key will look forward.
+
+The shortcuts modify the command line or the shell screen. Here is a list a them (Some of them use Ctrl key) :
+
+[RIGHT]  Move the cursor to the Right
+
+[LEFT]  Move the cursor to the Left
+
+[UP]  Backward in the history
+
+[DOWN]  Forward in the history
+
+[CTRL] + [A]  Back to the beginning of the command line
+
+[CTRL] + [E]  Go to the end of the line
+
+[CTRL] + [L]  Clear the screen
+
+[CTRL] + [F]  Move the cursor Forward
+
+[CTRL] + [B]  Move the cursor Backward
+
+[CTRL] + [K]  Delete everything after cursor
+
+[CTRL] + [W]  Delete everything before cursor
+
+[CTRL] + [C]  Signal SIGINT
+
+You case use those shortcuts while editing the command line to modify it.
+
+.SH ENVIRONMENT
+The dogesh uses environment for commands who need it. There are three commands created to play with the environment, the user can add or delete variables from the environment easily with setenv and unsetenv commands. The user can also display the content of the environment with env. Here is the different commands that are in the dogesh to play with the environment :
+
+Setenv : Setenv is a dogesh command that takes two arguments in parameters. The first one is the name of the environment variable and the second is the content of this variable.
+The shell will create a environment variable called VAR and will set his value at VALUE. If the variable already exists, the shell will only replace the value by the second parameter.
+
+Unsetenv : Unsetenv is a dogesh command that takes one argument in parameter. This parameter is the name of the environment variable that the user wants to delete.
+The shell will delete the environment variable called VAR.
+
+Env : Env displays the environment
+For each environment variable, the shell will write on the standard ouput the name of the variable, the character '=' and the value of this variable.
+
+Thoses commands are not binaries but features directly implemented into the doge shell.
+
+.SH CONFIGURATION FILE -- DOGESHRC
+You can use a configuration file to fill your own shell environement.
+Any valid command line using binary or builtins is allowed on the dogeshrc.
+You can store aliases with alias, environment variables with setenv, unsetenv and set the keyboard map for example.
+
+DOGESHRC is loaded when the shell when the user starts the shell.
+
+.SH BASIC USE
+In the dogesh, the user can use multiple types of command. Basic features are :
+
+Pipe, token : '|' : Put the output of the left command into the input of the right command.
+
+Right redirection, token '>' : Redirect the ouput of the left command into the file described at the right of the token. If this last is doubled, the file is not overwritten and the output starts to write at the end of the file. If it doesn't exists, he is created. Chmod is 644.
+
+Left redirection, token '<' : Redirect the content of the file at the right into the input of the command left to the token. Double one bufferize on a tty until a EOT string before sending it to the binary's entry.
+
+Separator : token ';' : Execute the command at the left, and when it's over, executes the one at the right. Summons a doge shiba inu that reset file descriptors between the first and the second one.
+
+Priorities : tokens '&&' and '||' : Allow the user to use priorities just into their command lines. AND or OR accepted. Parenthesis work also. The user can mix them.
+
+.SH GLOBBING
+
+Into the dogesh, the user can make global queries into the command line. For example if he wants to select everything beginning by "d" and ending by "ge", he can type "d*ge". If he wants to cat every dot c and dot h files in every child directories, he uses "cat */*.[ch]". It's wonderful, isn't it ?
+
+Summary :
+
+	*	: Wildcard selecting everything
+	  x*x	: Everything with 'x' before and 'x' after
+	*[abc]* : Everything with a, b or c in the middle
+
+
+.SH PROMPT
+You can custom your prompt with the envirnoment variable PS1.
+
+Exemple : `setenv PS1 "$> "`
+
+You can use dfferent flags for your prompt :
+
+.B	 Date Flags
+
+	"\\d" : the date in "Weekday Month Date"
+
+	"\\t" : the current time in 24-hour HH:MM:SS format
+
+	"\\T" : the current time in 12-hour HH:MM:SS format
+
+	"\\@" : the current time in 12-hour am/pm format
+
+	"\\A" : the current time in 24-hour HH:MM format
+
+.B	Characters Flags
+
+	"\\a" : an ASCII bell character (07)
+
+	"\\e" : an ASCII escape character (033)
+
+	"\\n" : newline
+
+	"\\r" : carriage return
+
+	"\\\\" : a backslash
+
+	"\\[" : begin a sequence of non-printing characters, which could be used to embed a terminal control sequence into the prompt
+
+	"\\]" : end a sequence of non-printing characters
+
+.B	Useful informations
+
+	"\\H" : the hostname
+
+	"\\s" : the name of the shell
+
+	"\\u" : the username of the current user
+
+	"\\v" : the version of dogesh
+
+	"\\V" : the release of dogesh, version + patch level
+
+	"\\w" : the current working directory, with $HOME abbreviated with a tilde
+
+	"\\W" : the basename of the current working directory, with $HOME abbreviated with a tilde
+
+	"\\#" : the command number of this command
+
+	"\\$" : if the effective UID is 0, a #, otherwise a $
+
+.SH JOBS
+
+The dogesh has the best job control you can have in a 42sh project. Use C-Z to suspend a program and type fg in your shell to make it back to the foreground. Then, if you prefer him at the background, type bg. You can enter "jobs" to see which jobs are currently running under the dogesh.
+
+.SH SEE ALSO
+You can see the others shells: tcsh, zsh, bash.
+
+.SH DOGE
+::::::~:~:,,,,,,,,,,::~~~~~~......,,,~~~~~,:,,,,,,~~~::~~~~~,,,,,,,,,,,,::::,,,,
+:::::~~::~~,,,:,::,,:~~~~~~.++=====...~~~~,,,,,,,,~~~~~::~~,...,==:.,,,:::::::,,
+::~~:~~~~~::,,::,,::::~~~~.++???++====:..::,:,,:,~~~~~~~~,..=======~.::::::::::,
+,:~~~~~~~~~~~:,,:,:,:::==..?=+II??+++====,.:,,::~=~~~~~..======++===~.:::::::,::
+,,,,:~~~:~~~~~~::::::::~=.???~I??+,.............,===~..=====+=++:+===..::::::::,
+,,,,,:~~~~~~~~~~:::,::::.+????=.~++++++============~...++=+++++:=+====.::::::,,,
+,,,,,,,:~~=~~=~~~~:,::::.++..??+++++======7====7==I====.,+++++,+++=:==.,::,,,,,,
+,,,,,,::,:~~~~~~~~~::::..+???+++++++7==7+=7I===7?+7==7===:77+,+++++:~==.,,,,,,,,
+,,,,,,I77?I:~~====~~..+?????+++++++=====+++++++=============~=+++++:===.,,,,,,,.
+~:,,,:,:,,:,,:~~==.=++??+???++++++=====+++++++++++++===++===+=+++++====.,,,,,,,,
+~~~~~,,::,::,,::..++++++???????++====~+???+++++++++++++++++++++~+=:====.,,,,,,,,
+::~~~~~:,,:,,::::+~+++??~?IIII??+===+????????+++++++++++++++++==~~=====.,,,,::::
+~~~~~~~~~~~:::..?????+?~???????+===+??IIII?????++++++++++++++++===.====.~:::::::
+~~~~~~=~=~~~=.III???+++:~,,???~====~+?IIII??????+++++++++++++++=====.==.::::::::
+,,,:~~~~~~==~.IIII?++~,    7+==+++===+??I???????+++++++++++++++======..,~~::::::
+,:,:,,,::~~~~.IIIIIII?,   $,,++++++++++++?, .?++++++++++++++++++======~.~~~~:::,
+,:,:,:::::::.?I7777III.  +++++++++++++.?     .++++++++++++++++++=======..,,,,,,,
+,:,,,,,:::::,?I7I7777I,,++++++++++++++~I:,    ,:+~=++++~=+++++++========.:,,,,,,
+~~~~~~::::::.I7I7777~.?++++++++++++++++,:.,..+???IIIII???????+++========,.,,,,,,
+~~~~~~===~~,I777777.?????++++++++++?+++?????IIIIIIIIIIII???????+++======~.,,,,,,
+~~~~~~~~~==~I777III.::,,.:+??+??????+:??IIIIIIIIIIIIIII?????+??+++=======,.:::::
+~~~~~~~~~=~.=I77I+.,,~~,....???????I+:?7IIIIIII?IIIII?????????+++++===~==:.:::::
+,,,,,:::::,.III7I?..~,,,,,,:.??III???~IIIIIIIIIIIIIII???????+++77+77==77:==.::::
+,,,,::::,::.II7II??.~::~=..,.?IIIII??+??IIIIIIIIIIIII????????++I+7+77=7=7==.::::
+,,::,,:::~,,777II.+:.:,::,.~=?????I?+??II?I?IIII?II?????+?+=+++++=++=~==,==:.,,,
+:~~~~====~~.77III~=,,,..,,,,=??????????IIIIIIIIIIIIII??????++++++++++=+~~===..,,
+~~~~=~==~~~~I7IIII.,,,,,,,,:++?????????IIIIIIIIIIII????????++++++++++=+:=====..,
+~~~~~~~~~~:.IIIIII?=:,....,,:?????I?????I?IIIIIIIII??????+++++++++++=+=:======.,
+~~~~~=,::,:.IIIIIII?,,,,,....=+   =~,:+??IIIIIIII?I???????+++++??+++=+~=======..
+~,,,,:,,::..IIIIIIIII.:,,,,,::   .:~=+???III??????????????+++++??++++::========.
+,,,:,,::::.~=IIIIIIIII:.::::~   =+++????????????????????+?+++++??++++:==========
+,,,:,::,,.~I,IIIIIIII???+...,:++++++??I???????????????????++??+??+++=:========,=
+,,,,,,~=~.II,,IIIIIII?++++++++++++++?????????????????????++???+?++++,=========.=
+,,,:~~~~~.III:??IIIII?++++++++?+???+????????????????????+++??++?++::=========,==
+,:::~~~~~.IIII.:??I?II?++++++7++++ +?? ???????????????++++???++++,==========~===
+::~:~~~~~.IIIII+~++????? +++77+++I ???  ???I? ??????????++?+++=+:=========:~====
+~:~~~:~~~.IIIII?+++++??+++++++++++ ??????????????????+??+++++:++=========,======
+::::~~~:,.?IIIII?+~~++++++++++++++?????????????????????+++~++++++=======:=======
+::::~~,,,.,IIIIIII?=~=++++++++++++????????????????????+++++++++++=====:=========
+::::,,,,,..?IIIIIIIII?=++++++++++++??????????????????++??++++++=====,===========
+::,,,,,,,.??IIIIIIIIII??=+~=++++++++++????????????????+??++++++=================
+,,,,,,,,.~+=?IIIIIIII??+++++++++++++++++??????+++++?? ?+ ++  ++= =+ =====++++===
+,,,,,,,,.???+?IIIIIII?+++++++++++++++=~::==~~+++?+???+   ++ +    =I +++++++++===
+,,,,,,,,,????=??????????+++++++??????????????????????+?+++=++++++++++++++++++===
+.,,,,,,,~?????=+??????++++++++????????????????????????++++++++++++++++++++++++++
+...,,,,,:=?????++++++++++++++??????????????I?III?????+++++++++++++++++++++++++++
+
+.SH BUGS
+Dogesh is the best shell ever, he doesn't have bugs.
+
+.SH DONATE
+Help us by sending Dogecoins <shiba.inu@doge.sh>
+
+.SH AUTHORS
+.B abollo_h & ballot_g & le-bor_d & locate_a & tawfik_e & DOGE

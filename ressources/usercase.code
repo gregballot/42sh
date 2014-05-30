@@ -1,0 +1,52 @@
+@startuml1
+
+	title 42sh
+
+	:User:
+
+	Rectangle Dogesh {
+
+		Rectangle Command {
+			(Prompt)
+			(Parser)
+			(History)
+		}
+
+		Rectangle Check_Cmd {
+			(Binary)
+			(Builtin)
+		}
+
+		Rectangle Data {
+			(Alias)
+			(Environment)
+		}
+
+		Rectangle Execution {
+			(Pipe)
+			(Redirection)
+		}
+	}
+
+	Rectangle Dogeshrc {
+		(Configuration file containing command lines)
+	}
+
+	(Man)
+	
+	Dogesh --> dogeshrc : Load file at start
+	Dogeshrc --> Data : Store data for user
+
+	User --> Dogesh : Starts the Shell
+	User --> Prompt : Enters a command line
+	User -right-> Man : Read the Man
+
+	Prompt --> Parser : Parse command line
+	Prompt --> History : Add cmd to history
+	History --> Prompt : Command line Advanced editing
+	Parser --> Check_Cmd : Prepare execution
+	Builtin --> Environment : Setenv and Unsetenv
+	Builtin --> Alias : Alias and Unalias
+	Binary --> Execution : Executes command
+
+@enduml1
