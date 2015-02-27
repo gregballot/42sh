@@ -1,4 +1,8 @@
-42sh
-====
+Dogesh is a UNIX shell developped in C for Epitech.
 
-Shell for epitech. Mark : 36/20
+authors :
+- abollo_h
+- ballot_g
+- le-bor_d
+- locate_a
+- tawfik_e
